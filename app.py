@@ -8,6 +8,8 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 ## Load the LSTM Model
 model = load_model('./next_word_lstm.h5')
 
+model1 = load_model('./next_word_gru.h5')
+
 ## Load the tokenizer
 with open('./tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
@@ -30,4 +32,6 @@ input_text = st.text_input('Enter the Sequence of words', 'Tell me about',placeh
 if st.button('Predict Next Word'):
     max_sequence_len = model.input_shape[1]
     next_word = predict_next_word(model, tokenizer, input_text, max_sequence_len)
-    st.write(f'Next word: {next_word}')
+    next_word_gru = predict_next_word(model1, tokenizer, input_text, max_sequence_len)
+    st.write(f'Next word LSTM: {next_word}')
+    st.write(f'Next word GRU: {next_word_gru}')
